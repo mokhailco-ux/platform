@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect, notFound } from "next/navigation";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
-import { Lock, ArrowRight } from "lucide-react";
+import { Lock, ArrowRight, FileText, Download } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -62,6 +62,13 @@ export default async function CourseVideosPage({ params }: { params: { id: strin
     .eq("course_id", course.id)
     .order("order_index", { ascending: true });
 
+  const { data: materials } = await admin
+    .from("course_materials")
+    .select("id, title, type")
+    .eq("course_id", course.id)
+    .eq("type", "pdf")
+    .order("order_index", { ascending: true });
+
   return (
     <div className="min-h-screen bg-navy-50 dark:bg-navy-950">
       <header className="border-b border-navy-100 bg-white px-6 py-5 dark:border-navy-800 dark:bg-navy-900">
@@ -72,6 +79,27 @@ export default async function CourseVideosPage({ params }: { params: { id: strin
       </header>
 
       <div className="mx-auto max-w-3xl px-5 py-10">
+        {materials && materials.length > 0 && (
+          <div className="mb-8 card p-5">
+            <h2 className="mb-3 flex items-center gap-2 font-bold text-navy-900 dark:text-white">
+              <FileText size={17} className="text-orange-500" /> ملفات ومذكرات PDF
+            </h2>
+            <ul className="space-y-2">
+              {materials.map((m) => (
+                <li key={m.id}>
+                  <a
+                    href={`/api/materials/${m.id}/download`}
+                    className="flex items-center justify-between rounded-xl border border-navy-100 px-4 py-3 text-sm font-medium text-navy-700 transition-colors hover:border-orange-500 hover:text-orange-500 dark:border-navy-700 dark:text-navy-200"
+                  >
+                    {m.title}
+                    <Download size={15} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         {(!videos || videos.length === 0) && (
           <p className="text-center text-navy-400">لم تُضَف فيديوهات لهذه الدورة بعد.</p>
         )}

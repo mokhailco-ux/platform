@@ -105,3 +105,90 @@ create unique index if not exists payments_provider_payment_id_key
 insert into courses (title, subject, stage, description, price, trial_days) values
   ('فيزياء ثالث ثانوي - نظام المسارات', 'فيزياء', 'ثالث ثانوي', 'مراجعة شاملة تناسب القدرات والتحصيلي', 229, 3)
 on conflict do nothing;
+
+-- ================================================================
+-- نظام حجز الحصص (خصوصي / جماعي / استشارة) + محتوى الدورات (PDF/فيديو)
+-- شغّل هذا الجزء بالكامل مرة واحدة بـ SQL Editor في Supabase
+-- ================================================================
+
+-- ---------- 6) جدول المواعيد المتاحة للحجز ----------
+create table if not exists session_slots (
+  id uuid default gen_random_uuid() primary key,
+  type text not null check (type in ('private','group','consultation')), -- خصوصي / جماعي / استشارة
+  title text not null,
+  starts_at timestamptz not null,
+  duration_minutes int not null default 60,
+  capacity int not null default 1,        -- عدد المقاعد (أكثر من 1 للحصص الجماعية)
+  booked_count int not null default 0,
+  is_active boolean not null default true,
+  notes text,
+  created_at timestamptz default now()
+);
+
+alter table session_slots enable row level security;
+create policy "الجميع يقدر يشوف المواعيد المتاحة"
+  on session_slots for select using (is_active = true);
+
+-- ---------- 7) جدول طلبات الحجز (تحتاج موافقة يدوية من الأدمن) ----------
+create table if not exists bookings (
+  id uuid default gen_random_uuid() primary key,
+  user_id uuid references auth.users(id) on delete cascade not null,
+  slot_id uuid references session_slots(id) on delete cascade not null,
+  type text not null check (type in ('private','group','consultation')),
+  status text not null default 'pending' check (status in ('pending','approved','rejected','cancelled')),
+  student_note text,
+  admin_note text,
+  created_at timestamptz default now(),
+  decided_at timestamptz
+);
+
+alter table bookings enable row level security;
+create policy "الطالب يشوف حجوزاته فقط"
+  on bookings for select using (auth.uid() = user_id);
+create policy "الطالب يقدر يطلب حجز"
+  on bookings for insert with check (auth.uid() = user_id);
+
+-- ---------- 8) جدول ملفات الدورات (PDF أو فيديو إضافي) ----------
+create table if not exists course_materials (
+  id uuid default gen_random_uuid() primary key,
+  course_id uuid references courses(id) on delete cascade not null,
+  title text not null,
+  type text not null default 'pdf' check (type in ('pdf','video')),
+  file_path text not null default '',   -- مسار الملف داخل حاوية Storage (لملفات PDF فقط)
+  youtube_id text,                       -- يُستخدم فقط إذا كان النوع فيديو
+  order_index int default 0,
+  created_at timestamptz default now()
+);
+
+alter table course_materials enable row level security;
+-- لا وصول مباشر من المتصفح - التحميل يمرّ حصرًا عبر route محمي يتحقق من الاشتراك أولًا
+create policy "لا وصول مباشر - فقط عبر السيرفر"
+  on course_materials for select using (false);
+
+-- ---------- 9) صلاحية الأدمن الحقيقية (منفصلة عن باسورد /admin القديم) ----------
+-- بعد ما تسجّل حساب عادي عبر /signup بإيميلك، شغّل السطر التالي (بدّل الإيميل):
+-- update profiles set is_admin = true where id = (select id from auth.users where email = 'your@email.com');
+
+create policy "الأدمن يشوف كل الحجوزات"
+  on bookings for select using (
+    exists (select 1 from profiles where profiles.id = auth.uid() and profiles.is_admin = true)
+  );
+create policy "الأدمن يحدّث الحجوزات"
+  on bookings for update using (
+    exists (select 1 from profiles where profiles.id = auth.uid() and profiles.is_admin = true)
+  );
+create policy "الأدمن يدير المواعيد"
+  on session_slots for all using (
+    exists (select 1 from profiles where profiles.id = auth.uid() and profiles.is_admin = true)
+  );
+create policy "الأدمن يدير الملفات"
+  on course_materials for all using (
+    exists (select 1 from profiles where profiles.id = auth.uid() and profiles.is_admin = true)
+  );
+
+-- ---------- 10) حاوية تخزين خاصة لملفات PDF (غير عامة) ----------
+insert into storage.buckets (id, name, public)
+values ('course-materials', 'course-materials', false)
+on conflict (id) do nothing;
+-- ملاحظة: كل عمليات الرفع/التحميل لهذه الحاوية تمرّ عبر السيرفر بصلاحيات
+-- Service Role فقط (route handlers)، لذلك لا حاجة لسياسات storage.objects إضافية.

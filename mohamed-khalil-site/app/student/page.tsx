@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { LogOut, Atom, Clock, Lock, PlayCircle } from "lucide-react";
+import { LogOut, Atom, Clock, Lock, PlayCircle, CalendarClock } from "lucide-react";
 import TrialButtonClient from "@/components/TrialButtonClient";
 
 export const dynamic = "force-dynamic";
@@ -57,7 +57,15 @@ export default async function StudentDashboard() {
       </header>
 
       <div className="mx-auto max-w-4xl px-5 py-10">
-        <h1 className="mb-6 font-display text-xl font-bold text-navy-900 dark:text-white">دوراتي</h1>
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+          <h1 className="font-display text-xl font-bold text-navy-900 dark:text-white">دوراتي</h1>
+          <Link
+            href="/student/booking"
+            className="flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-400 to-orange-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-orange-500/30 transition-all hover:-translate-y-0.5"
+          >
+            <CalendarClock size={16} /> احجز حصة (خصوصي / جماعي / استشارة)
+          </Link>
+        </div>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           {(courses ?? []).map((course) => {

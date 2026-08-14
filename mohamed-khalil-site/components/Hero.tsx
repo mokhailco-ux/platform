@@ -34,6 +34,9 @@ export default function Hero({ country }: { country: Country }) {
       ))}
 
       <div className="relative mx-auto flex max-w-4xl flex-col items-center px-5 text-center">
+        {/* توهج خلفي خلف العنوان الرئيسي - لمسة فخامة إضافية */}
+        <div className="pointer-events-none absolute left-1/2 top-16 h-72 w-72 -translate-x-1/2 rounded-full bg-orange-500/20 blur-[100px]" />
+
         <motion.span
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}

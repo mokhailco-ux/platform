@@ -74,7 +74,7 @@ export default function Header({ country }: { country: Country }) {
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8 lg:px-16">
         <a href="#" className="flex items-center gap-2 font-display font-extrabold text-navy-900 dark:text-white">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-orange-500 text-white">
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 text-white shadow-lg shadow-orange-500/30 ring-2 ring-white/20">
             <Atom size={18} />
           </span>
           <span className="text-lg">أ. محمد خليل</span>

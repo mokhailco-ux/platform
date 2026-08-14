@@ -29,7 +29,7 @@ export default function Courses({ country }: { country: Country }) {
               className="card relative flex flex-col p-6"
             >
               {course.badge && (
-                <span className="absolute -top-3 right-6 flex items-center gap-1 rounded-full bg-orange-500 px-3 py-1 text-xs font-bold text-white">
+                <span className="badge-gold absolute -top-3 right-6 flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold text-white">
                   <Sparkles size={12} />
                   {course.badge}
                 </span>

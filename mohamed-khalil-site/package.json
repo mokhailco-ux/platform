@@ -2,7 +2,7 @@
   "name": "mohamed-khalil-physics",
   "version": "1.0.0",
   "private": true,
-  "description": "الموقع = للأستاذ محمد خليل - مدرس فيزياء ورياضيات أونلاين",
+  "description": "الموقع الرسمي للأستاذ محمد خليل - مدرس فيزياء ورياضيات أونلاين",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
