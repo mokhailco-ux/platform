@@ -21,7 +21,7 @@ export default function Footer({ country }: { country: Country }) {
         </a>
 
         <p className="max-w-md text-sm leading-6 text-navy-400">
-          مدرس فيزياء ورياضيات أونلاين لطلاب الثانوية العامة في {country.name}.
+          مدرس فيزياء ورياضيات أونلاين لطلاب الثانوية العامة في .
         </p>
 
         <div className="flex items-center gap-3">
