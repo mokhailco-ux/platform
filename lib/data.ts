@@ -18,49 +18,48 @@ export type Course = {
 
 export const courses: Course[] = [
   {
-    id: "physics-1",
-    title: "فيزياء أول ثانوي - كورس شامل",
-    stage: "أول ثانوي",
-    subject: "فيزياء",
-    price: 149,
-    oldPrice: 199,
-    description:
-      "شرح كامل لمنهج الفيزياء للصف الأول الثانوي مع حل تمارين الكتاب واختبارات دورية.",
-    features: ["+40 ساعة شرح", "بنك أسئلة ضخم", "متابعة أسبوعية", "شهادة إتمام"],
-    badge: "الأكثر طلبًا",
-  },
-  {
-    id: "physics-2",
-    title: "فيزياء ثاني ثانوي - ميكانيكا وكهرباء",
-    stage: "ثاني ثانوي",
-    subject: "فيزياء",
-    price: 179,
-    description:
-      "تأسيس قوي في الميكانيكا والكهرباء الساكنة مع استراتيجيات حل المسائل المركبة.",
-    features: ["+45 ساعة شرح", "حصص حل مسائل", "ملازم PDF", "جروب دعم"],
-  },
-  {
-    id: "physics-3",
-    title: "فيزياء ثالث ثانوي - نظام المسارات",
-    stage: "ثالث ثانوي",
-    subject: "فيزياء",
-    price: 229,
-    oldPrice: 279,
-    description:
-      "مراجعة شاملة ومكثفة تناسب اختبارات القدرات والتحصيلي مع نماذج اختبارات محاكية.",
-    features: ["+60 ساعة شرح", "نماذج اختبارات", "مراجعة نهائية مكثفة", "استشارة فردية"],
-    badge: "عرض خاص",
-  },
-  {
-    id: "math-all",
-    title: "رياضيات جميع المراحل - باقة شاملة",
-    stage: "جميع المراحل",
-    subject: "رياضيات",
-    price: 199,
-    description:
-      "تغطية كاملة لمنهج الرياضيات لكل المراحل الثانوية بأسلوب مبسط وتدرج منطقي في الأفكار.",
-    features: ["تحديث مستمر للمحتوى", "حل واجبات دورية", "دعم فني مباشر", "اختبارات تفاعلية"],
-  },
+   
+        id: "sa-physics-1",
+        title: "فيزياء ثانوي ",
+        stage: "أول ثانوي",
+        subject: "فيزياء",
+        price: 75,
+        oldPrice: 100,
+        description: "شرح كامل لمنهج الفيزياء للصف الأول الثانوي - ثاني ثانوي -ثالث ثانوي مع حل تمارين الكتاب واختبارات دورية.",
+        features: ["مدة الحصة ساعة  60 دقيقة ","حصص تفاعلية عبر Google meet " ,"حل أسئلة الدروس والواجبات ","يمكن الحجز فردي أو مجموعة "],
+        badge: "الأكثر طلبًا",
+      },
+      {
+        id: "sa-physics-2",
+        title: "فيزياء ثانوي - تحصيلي ",
+        stage: "ثالث ثانوي",
+        subject: "فيزياء",
+        price: 500,
+        oldPrice: 600,
+        description: "تأسيس قوي و تحضير للاختبار التحصيلي .",
+        features: ["25 ساعة تأسيس","حصص تفاعلية عبر Google meet ", " حل مسائل و تجميعات", "مجموعات صغيرة (حد أقصى 5 طلاب )" ,"جروب دعم"],
+      },
+      {
+        id: "sa-physics-2",
+        title: "رياضيات ثانوي - تحصيلي ",
+        stage: "ثالث ثانوي",
+        subject: "فيزياء",
+        price: 500,
+        oldPrice: 600,
+        description: "تأسيس قوي و تحضير للاختبار التحصيلي .",
+        features: ["25 ساعة تأسيس","حصص تفاعلية عبر Google meet ", " حل مسائل و تجميعات", "مجموعات صغيرة (حد أقصى 5 طلاب )" ,"جروب دعم"],
+      },
+      {
+        id: "sa-math-all",
+        title: "رياضيات جميع المراحل - باقة شاملة",
+        stage: "جميع المراحل",
+        subject: "رياضيات",
+        price: 75,
+        oldPrice: 100,
+        description: "شرح كامل لمنهج الرياضيات للصف الأول الثانوي - ثاني ثانوي -ثالث ثانوي مع حل تمارين الكتاب واختبارات دورية.",
+        features: ["مدة الحصة ساعة  60 دقيقة ","حصص تفاعلية عبر Google meet " ,"حل أسئلة الدروس والواجبات ","يمكن الحجز فردي أو مجموعة "],
+        badge: "الأكثر طلبًا",
+      },
 ];
 
 export type Video = {
@@ -73,19 +72,19 @@ export type Video = {
 export const videos: Video[] = [
   {
     id: "v1",
-    youtubeId: "dQw4w9WgXcQ",
+    youtubeId: "https://youtu.be/oKl5NccwNmQ?si=Sa1llB9BsA7uhmaE",
     title: "مقدمة في قوانين نيوتن للحركة",
     description: "شرح مبسط لقوانين نيوتن الثلاثة مع أمثلة تطبيقية.",
   },
   {
     id: "v2",
-    youtubeId: "dQw4w9WgXcQ",
+    youtubeId: "https://youtu.be/oKl5NccwNmQ?si=Sa1llB9BsA7uhmaE",
     title: "كيف تحل مسائل الكهرباء الساكنة؟",
     description: "استراتيجية خطوة بخطوة لحل أصعب مسائل الكهرباء الساكنة.",
   },
   {
     id: "v3",
-    youtubeId: "dQw4w9WgXcQ",
+    youtubeId: "https://youtu.be/oKl5NccwNmQ?si=Sa1llB9BsA7uhmaE",
     title: "المعادلات التفاضلية ببساطة",
     description: "تبسيط فكرة المعادلات وربطها بتطبيقات الفيزياء.",
   },
@@ -166,14 +165,14 @@ export const faqs: FaqItem[] = [
 ];
 
 export const stats = {
-  students: 1280,
-  courses: 24,
-  hours: 950,
+  students:+128,
+  courses: +12 ,
+  hours: + 500 ,
 };
 
 export const social = {
-  whatsapp: "https://wa.me/966500000000",
-  telegram: "https://t.me/mohamedkhalil",
+  whatsapp: "https://wa.me/962795248501",
+  telegram: "https://t.me/mkhalil2723",
   facebook: "https://facebook.com/mohamedkhalil",
   instagram: "https://instagram.com/mohamedkhalil",
 };
