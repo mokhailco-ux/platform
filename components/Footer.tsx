@@ -14,14 +14,17 @@ export default function Footer({ country }: { country: Country }) {
     <footer className="border-t border-navy-800 bg-navy-950 px-5 py-12 text-navy-300 sm:px-8">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 text-center">
         <a href="#" className="flex items-center gap-2 font-display font-extrabold text-white">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-orange-500 text-white">
+          <span
+            className="flex h-9 w-9 items-center justify-center rounded-full text-white shadow-md shadow-orange-500/20"
+            style={{ background: "linear-gradient(135deg, #ff9a5a, #e8600f)" }}
+          >
             <Atom size={18} />
           </span>
           أ. محمد خليل
         </a>
 
         <p className="max-w-md text-sm leading-6 text-navy-400">
-          مدرس فيزياء ورياضيات أونلاين لطلاب الثانوية العامة في .
+          مدرس فيزياء ورياضيات أونلاين لطلاب الثانوية العامة في {country.name}.
         </p>
 
         <div className="flex items-center gap-3">

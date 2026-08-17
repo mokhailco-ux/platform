@@ -1,29 +1,26 @@
 import { NextResponse } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 
-// نفس منطق حماية الفيديوهات بالضبط: نتحقق من الاشتراك الفعلي (تجربة سارية
-// أو اشتراك مفعّل) بالسيرفر أولًا، ولا نُنشئ رابط تحميل إلا بعد التأكد.
+// يتحقق أولًا من أن الطالب مسجّل ولديه اشتراك فعّال بالدورة المرتبطة
+// بهذا الملف، قبل ما يولّد رابط تحميل مؤقت (صالح لدقيقة واحدة فقط).
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   const supabase = createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) return NextResponse.json({ error: "يجب تسجيل الدخول أولًا" }, { status: 401 });
+  if (!user) return NextResponse.redirect(new URL("/login", request.url));
 
   const admin = createAdminClient();
-
   const { data: material } = await admin
     .from("course_materials")
-    .select("id, course_id, file_path, type")
+    .select("id, file_path, course_id")
     .eq("id", params.id)
     .single();
 
-  if (!material || material.type !== "pdf" || !material.file_path) {
-    return NextResponse.json({ error: "الملف غير موجود" }, { status: 404 });
-  }
+  if (!material) return NextResponse.json({ error: "الملف غير موجود" }, { status: 404 });
 
-  const { data: enrollment } = await admin
+  const { data: enrollment } = await supabase
     .from("enrollments")
     .select("status, trial_ends_at")
     .eq("user_id", user.id)
@@ -42,7 +39,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
   const { data: signed, error } = await admin.storage
     .from("course-materials")
-    .createSignedUrl(material.file_path, 60); // رابط صالح لمدة دقيقة واحدة فقط
+    .createSignedUrl(material.file_path, 60);
 
   if (error || !signed) {
     return NextResponse.json({ error: "تعذّر إنشاء رابط التحميل" }, { status: 500 });

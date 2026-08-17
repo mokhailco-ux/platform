@@ -1,15 +1,17 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
-// ================================================================
-// نظام صلاحيات الأدمن الحقيقي (profiles.is_admin) - منفصل تمامًا عن
-// باسورد /admin القديم. أي مستخدم عادي يسجّل عبر /signup، وبعدها
-// يُفعَّل حسابه كأدمن يدويًا بسطر SQL واحد (موجود بآخر schema.sql).
-// ================================================================
+// طريقتان يصير فيهم الحساب "أدمن":
+// 1) بريده يطابق ADMIN_EMAIL بمتغيرات البيئة - أسهل طريقة، بدون لمس قاعدة البيانات.
+// 2) عمود profiles.is_admin = true - يدويًا من Supabase، لإضافة أدمن إضافي لاحقًا.
+function isAdminEmail(email: string | undefined | null) {
+  const adminEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+  return !!adminEmail && !!email && email.toLowerCase() === adminEmail;
+}
 
-// للاستخدام داخل صفحات app/admin-panel/** (Server Components):
-// يُحوّل تلقائيًا لو المستخدم غير مسجّل دخول أو غير أدمن.
-export async function requireAdmin() {
+// يُستخدم داخل صفحات السيرفر (Server Components) بمنطقة الأدمن.
+// يتأكد إن الزائر مسجّل دخول وإن حسابه أدمن، وإلا يرجّعه لمكان مناسب.
+export async function requireAdminPage() {
   const supabase = createClient();
   const {
     data: { user },
@@ -23,14 +25,15 @@ export async function requireAdmin() {
     .eq("id", user.id)
     .single();
 
-  if (!profile?.is_admin) redirect("/student");
+  const isAdmin = profile?.is_admin || isAdminEmail(user.email);
+  if (!isAdmin) redirect("/student");
 
   return { user, profile };
 }
 
-// للاستخدام داخل app/api/admin/** (Route Handlers):
-// يرجّع null بدل ما يعمل redirect، لأن الـ API لازم يرجّع استجابة JSON.
-export async function getAdminUser() {
+// نفس الفكرة بس لمسارات الـ API (route handlers) - يرجّع null لو مو أدمن
+// بدل ما يعمل redirect (اللي ما ينفع داخل route handler).
+export async function requireAdminApi() {
   const supabase = createClient();
   const {
     data: { user },
@@ -44,7 +47,8 @@ export async function getAdminUser() {
     .eq("id", user.id)
     .single();
 
-  if (!profile?.is_admin) return null;
+  const isAdmin = profile?.is_admin || isAdminEmail(user.email);
+  if (!isAdmin) return null;
 
   return user;
 }

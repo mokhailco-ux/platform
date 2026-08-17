@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Check, Sparkles } from "lucide-react";
 import type { Country } from "@/lib/countries";
+import BookPackageButton from "@/components/BookPackageButton";
 
 export default function Courses({ country }: { country: Country }) {
   return (
@@ -29,7 +30,10 @@ export default function Courses({ country }: { country: Country }) {
               className="card relative flex flex-col p-6"
             >
               {course.badge && (
-                <span className="badge-gold absolute -top-3 right-6 flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold text-white">
+                <span
+                  className="absolute -top-3 right-6 flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold text-navy-900 shadow-md"
+                  style={{ background: "linear-gradient(135deg, #FFC145, #FF9A5A)" }}
+                >
                   <Sparkles size={12} />
                   {course.badge}
                 </span>
@@ -66,11 +70,12 @@ export default function Courses({ country }: { country: Country }) {
                 )}
               </div>
 
+              <BookPackageButton packageTitle={course.title} whatsapp={country.whatsapp} />
               <a
                 href="/signup"
-                className="btn-primary mt-6 w-full justify-center !py-3 text-sm"
+                className="mt-3 block text-center text-xs font-bold text-navy-400 hover:text-orange-500"
               >
-                سجّل وابدأ فترة مجانية
+                أو جرّب مجانًا عبر حسابك
               </a>
             </motion.div>
           ))}

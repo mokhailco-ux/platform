@@ -1,54 +1,60 @@
 import Link from "next/link";
-import { createAdminClient } from "@/lib/supabase/server";
-import { requireAdmin } from "@/lib/admin";
-import { CalendarClock, ClipboardCheck, FileText } from "lucide-react";
+import { requireAdminPage } from "@/lib/admin";
+import { FileUp, CalendarPlus, ClipboardCheck, LogOut } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminHome() {
-  await requireAdmin();
-  const admin = createAdminClient();
-
-  const [{ count: pendingCount }, { count: slotsCount }, { count: materialsCount }] = await Promise.all([
-    admin.from("bookings").select("id", { count: "exact", head: true }).eq("status", "pending"),
-    admin.from("session_slots").select("id", { count: "exact", head: true }).eq("is_active", true),
-    admin.from("course_materials").select("id", { count: "exact", head: true }),
-  ]);
+export default async function AdminPanelHome() {
+  const { profile } = await requireAdminPage();
 
   const cards = [
     {
-      href: "/admin-panel/bookings",
-      label: "طلبات حجز بانتظار الموافقة",
-      value: pendingCount ?? 0,
-      icon: ClipboardCheck,
+      href: "/admin-panel/materials",
+      icon: FileUp,
+      title: "رفع محتوى",
+      desc: "ملفات PDF (حلول اختبارات، ملازم) وفيديوهات إضافية لكل دورة",
     },
     {
       href: "/admin-panel/sessions",
-      label: "مواعيد متاحة حاليًا",
-      value: slotsCount ?? 0,
-      icon: CalendarClock,
+      icon: CalendarPlus,
+      title: "مواعيد الحصص",
+      desc: "أضف مواعيد حصص خصوصية أو جماعية أو استشارات للحجز",
     },
     {
-      href: "/admin-panel/materials",
-      label: "ملفات وفيديوهات مرفوعة",
-      value: materialsCount ?? 0,
-      icon: FileText,
+      href: "/admin-panel/bookings",
+      icon: ClipboardCheck,
+      title: "طلبات الحجز",
+      desc: "وافق أو ارفض طلبات حجز الحصص الواردة من الطلاب",
     },
   ];
 
   return (
-    <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
-      {cards.map((c) => (
-        <Link
-          key={c.href}
-          href={c.href}
-          className="card p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-navy-900/10 dark:hover:shadow-black/40"
-        >
-          <c.icon className="text-orange-500" />
-          <p className="mt-4 font-mono text-3xl font-extrabold text-navy-900 dark:text-white">{c.value}</p>
-          <p className="mt-1 text-sm text-navy-500 dark:text-navy-300">{c.label}</p>
-        </Link>
-      ))}
+    <div className="min-h-screen bg-navy-50 dark:bg-navy-950">
+      <header className="flex items-center justify-between border-b border-navy-100 bg-white px-6 py-5 dark:border-navy-800 dark:bg-navy-900">
+        <div>
+          <h1 className="font-display text-lg font-bold text-navy-900 dark:text-white">
+            لوحة الإدارة
+          </h1>
+          <p className="text-xs text-navy-400">مرحبًا {profile?.full_name ?? "أستاذ محمد"}</p>
+        </div>
+        <form action="/api/auth/logout" method="POST">
+          <button className="flex items-center gap-2 text-sm font-bold text-navy-500 hover:text-red-500 dark:text-navy-300">
+            <LogOut size={16} /> خروج
+          </button>
+        </form>
+      </header>
+
+      <div className="mx-auto grid max-w-4xl grid-cols-1 gap-5 px-5 py-10 sm:grid-cols-3">
+        {cards.map((c) => (
+          <Link key={c.href} href={c.href} className="card p-6 transition-transform hover:-translate-y-1">
+            <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-orange-500/10 text-orange-500">
+              <c.icon size={22} />
+            </span>
+            <h2 className="mb-2 font-bold text-navy-900 dark:text-white">{c.title}</h2>
+            <p className="text-sm leading-6 text-navy-500 dark:text-navy-300">{c.desc}</p>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }

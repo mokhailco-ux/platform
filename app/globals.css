@@ -7,10 +7,6 @@
     scroll-behavior: smooth;
   }
 
-  h1, h2, h3 {
-    @apply tracking-tight;
-  }
-
   body {
     @apply bg-white text-navy-900 dark:bg-navy-950 dark:text-navy-50 font-body antialiased;
     font-feature-settings: "ss01";
@@ -45,11 +41,20 @@
   }
 
   .eyebrow {
-    @apply inline-block font-mono text-xs tracking-[0.25em] text-orange-500 mb-3;
+    @apply inline-flex items-center gap-2 font-mono text-xs tracking-[0.25em] text-orange-500 mb-3;
+  }
+  .eyebrow::before {
+    content: "";
+    @apply h-px w-6 bg-gradient-to-r from-orange-500 to-transparent;
   }
 
   .btn-primary {
-    @apply inline-flex items-center gap-2 rounded-full bg-orange-500 px-7 py-3.5 font-bold text-white shadow-lg shadow-orange-500/25 transition-all duration-300 hover:bg-orange-600 hover:shadow-orange-500/40 hover:-translate-y-0.5 active:translate-y-0;
+    @apply relative inline-flex items-center gap-2 rounded-full px-7 py-3.5 font-bold text-white transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0;
+    background: linear-gradient(135deg, #ff9a5a 0%, #ff7a29 55%, #e8600f 100%);
+    box-shadow: 0 12px 28px -8px rgba(255, 122, 41, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 16px 34px -6px rgba(255, 122, 41, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3);
   }
 
   .btn-secondary {
@@ -57,16 +62,24 @@
   }
 
   .card {
-    @apply rounded-2xl border border-navy-100 dark:border-navy-700 bg-white dark:bg-navy-800/60 backdrop-blur-sm shadow-sm transition-all duration-300 hover:shadow-xl hover:shadow-navy-900/10 dark:hover:shadow-black/40;
+    @apply relative rounded-2xl border border-navy-100 dark:border-navy-700 bg-white dark:bg-navy-800/60 backdrop-blur-sm transition-all duration-300;
+    box-shadow: 0 1px 2px rgba(12, 21, 38, 0.04), 0 12px 32px -16px rgba(12, 21, 38, 0.08);
   }
-
-  /* شارة ذهبية فخمة لعناصر "الأكثر طلبًا" و"عرض خاص" */
-  .badge-gold {
-    @apply bg-gradient-to-r from-gold via-orange-400 to-orange-600 shadow-lg shadow-orange-500/40;
+  .card:hover {
+    box-shadow: 0 1px 2px rgba(12, 21, 38, 0.05), 0 24px 48px -20px rgba(12, 21, 38, 0.16);
+    @apply border-orange-500/30 dark:border-orange-500/30;
   }
 
   .input-field {
     @apply w-full rounded-xl border border-navy-200 bg-white px-4 py-3 text-sm text-navy-900 outline-none transition-colors focus:border-orange-500 dark:border-navy-600 dark:bg-navy-900 dark:text-white;
+  }
+
+  /* لمسة فخامة: نص بتدرج ذهبي/برتقالي لعناصر مميزة (شارات، أرقام) */
+  .text-premium-gradient {
+    background: linear-gradient(135deg, #ffc145, #ff7a29);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 }
 

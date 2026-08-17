@@ -64,9 +64,8 @@ export default async function CourseVideosPage({ params }: { params: { id: strin
 
   const { data: materials } = await admin
     .from("course_materials")
-    .select("id, title, type")
+    .select("id, title")
     .eq("course_id", course.id)
-    .eq("type", "pdf")
     .order("order_index", { ascending: true });
 
   return (
@@ -79,27 +78,6 @@ export default async function CourseVideosPage({ params }: { params: { id: strin
       </header>
 
       <div className="mx-auto max-w-3xl px-5 py-10">
-        {materials && materials.length > 0 && (
-          <div className="mb-8 card p-5">
-            <h2 className="mb-3 flex items-center gap-2 font-bold text-navy-900 dark:text-white">
-              <FileText size={17} className="text-orange-500" /> ملفات ومذكرات PDF
-            </h2>
-            <ul className="space-y-2">
-              {materials.map((m) => (
-                <li key={m.id}>
-                  <a
-                    href={`/api/materials/${m.id}/download`}
-                    className="flex items-center justify-between rounded-xl border border-navy-100 px-4 py-3 text-sm font-medium text-navy-700 transition-colors hover:border-orange-500 hover:text-orange-500 dark:border-navy-700 dark:text-navy-200"
-                  >
-                    {m.title}
-                    <Download size={15} />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
         {(!videos || videos.length === 0) && (
           <p className="text-center text-navy-400">لم تُضَف فيديوهات لهذه الدورة بعد.</p>
         )}
@@ -126,6 +104,26 @@ export default async function CourseVideosPage({ params }: { params: { id: strin
             </div>
           ))}
         </div>
+
+        {materials && materials.length > 0 && (
+          <div className="mt-10">
+            <h2 className="mb-4 font-bold text-navy-800 dark:text-navy-200">ملفات ومرفقات</h2>
+            <div className="space-y-2">
+              {materials.map((m) => (
+                <a
+                  key={m.id}
+                  href={`/api/materials/${m.id}`}
+                  className="card flex items-center justify-between p-4 text-sm transition-colors hover:border-orange-500"
+                >
+                  <span className="flex items-center gap-2 text-navy-800 dark:text-navy-100">
+                    <FileText size={16} className="text-orange-500" /> {m.title}
+                  </span>
+                  <Download size={16} className="text-navy-400" />
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

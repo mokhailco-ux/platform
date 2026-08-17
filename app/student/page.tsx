@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { LogOut, Atom, Clock, Lock, PlayCircle, CalendarClock } from "lucide-react";
+import { LogOut, Atom, Clock, Lock, PlayCircle, CalendarDays, ShieldCheck } from "lucide-react";
 import TrialButtonClient from "@/components/TrialButtonClient";
 
 export const dynamic = "force-dynamic";
@@ -22,9 +22,11 @@ export default async function StudentDashboard() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("full_name")
+    .select("full_name, is_admin")
     .eq("id", user.id)
     .single();
+
+  const isAdmin = profile?.is_admin || (process.env.ADMIN_EMAIL?.toLowerCase() === user.email?.toLowerCase());
 
   const { data: courses } = await supabase
     .from("courses")
@@ -49,23 +51,25 @@ export default async function StudentDashboard() {
           </span>
           مرحبًا {profile?.full_name?.split(" ")[0] ?? "بك"} 👋
         </div>
-        <form action="/api/auth/logout" method="POST">
-          <button className="flex items-center gap-2 text-sm font-bold text-navy-500 hover:text-red-500 dark:text-navy-300">
-            <LogOut size={16} /> تسجيل خروج
-          </button>
-        </form>
+        <div className="flex items-center gap-4">
+          {isAdmin && (
+            <Link href="/admin-panel" className="flex items-center gap-2 text-sm font-bold text-orange-500">
+              <ShieldCheck size={16} /> لوحة الإدارة
+            </Link>
+          )}
+          <Link href="/student/booking" className="flex items-center gap-2 text-sm font-bold text-navy-500 hover:text-orange-500 dark:text-navy-300">
+            <CalendarDays size={16} /> حجز حصة
+          </Link>
+          <form action="/api/auth/logout" method="POST">
+            <button className="flex items-center gap-2 text-sm font-bold text-navy-500 hover:text-red-500 dark:text-navy-300">
+              <LogOut size={16} /> تسجيل خروج
+            </button>
+          </form>
+        </div>
       </header>
 
       <div className="mx-auto max-w-4xl px-5 py-10">
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-          <h1 className="font-display text-xl font-bold text-navy-900 dark:text-white">دوراتي</h1>
-          <Link
-            href="/student/booking"
-            className="flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-400 to-orange-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-orange-500/30 transition-all hover:-translate-y-0.5"
-          >
-            <CalendarClock size={16} /> احجز حصة (خصوصي / جماعي / استشارة)
-          </Link>
-        </div>
+        <h1 className="mb-6 font-display text-xl font-bold text-navy-900 dark:text-white">دوراتي</h1>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           {(courses ?? []).map((course) => {

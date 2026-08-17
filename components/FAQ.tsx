@@ -3,9 +3,10 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import { faqs } from "@/lib/data";
+import type { Country } from "@/lib/countries";
 
-export default function FAQ() {
+export default function FAQ({ country }: { country: Country }) {
+  const faqs = country.faqs;
   const [openId, setOpenId] = useState<string | null>(faqs[0]?.id ?? null);
 
   return (

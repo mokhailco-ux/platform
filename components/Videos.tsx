@@ -31,7 +31,7 @@ export default function Videos() {
             <div className="relative aspect-video w-full overflow-hidden bg-navy-800">
               <iframe
                 className="h-full w-full"
-                src={`https://youtu.be/oKl5NccwNmQ?si=MxhL6cvy1yt8_zc_${video.youtubeId}`}
+                src={`https://www.youtube.com/embed/${video.youtubeId}`}
                 title={video.title}
                 loading="lazy"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

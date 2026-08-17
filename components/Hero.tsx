@@ -18,6 +18,11 @@ export default function Hero({ country }: { country: Country }) {
       {/* شبكة خلفية خفيفة توحي بورق الفيزياء المربّع */}
       <div className="absolute inset-0 bg-grid-physics bg-grid opacity-40" />
       <div className="absolute inset-0 bg-gradient-to-b from-navy-950 via-navy-950/95 to-navy-950" />
+      {/* توهج خلفي ناعم خلف العنوان لإحساس أكثر فخامة */}
+      <div
+        className="pointer-events-none absolute left-1/2 top-24 h-[420px] w-[420px] -translate-x-1/2 rounded-full opacity-30 blur-[100px]"
+        style={{ background: "radial-gradient(circle, #FF7A29 0%, transparent 70%)" }}
+      />
 
       {/* الرموز العائمة */}
       {floatingSymbols.map((item, i) => (
@@ -34,9 +39,6 @@ export default function Hero({ country }: { country: Country }) {
       ))}
 
       <div className="relative mx-auto flex max-w-4xl flex-col items-center px-5 text-center">
-        {/* توهج خلفي خلف العنوان الرئيسي - لمسة فخامة إضافية */}
-        <div className="pointer-events-none absolute left-1/2 top-16 h-72 w-72 -translate-x-1/2 rounded-full bg-orange-500/20 blur-[100px]" />
-
         <motion.span
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -50,7 +52,7 @@ export default function Hero({ country }: { country: Country }) {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="font-display text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl"
+          className="font-display text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl"
         >
           أتقن الفيزياء مع الأستاذ{" "}
           <span className="text-orange-500">محمد خليل</span>

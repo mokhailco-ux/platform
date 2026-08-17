@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { GraduationCap, Lightbulb, Target, Users2 } from "lucide-react";
+import type { Country } from "@/lib/countries";
 
 const strengths = [
   {
@@ -12,7 +13,7 @@ const strengths = [
   {
     icon: Target,
     title: "التركيز على الاختبارات",
-    desc: "تدريب مكثف على نمط أسئلة الأختبارات.",
+    desc: "تدريب مكثف على نمط أسئلة الوزارة والقدرات والتحصيلي.",
   },
   {
     icon: Users2,
@@ -22,11 +23,11 @@ const strengths = [
   {
     icon: GraduationCap,
     title: "خبرة تدريسية",
-    desc: "سنوات من التدريس أونلاين لطلاب الثانوية العامة في.",
+    desc: "سنوات من التدريس أونلاين لطلاب الثانوية العامة.",
   },
 ];
 
-export default function About() {
+export default function About({ country }: { country: Country }) {
   return (
     <section id="about" className="section-padding mx-auto max-w-6xl">
       <div className="grid grid-cols-1 items-start gap-14 lg:grid-cols-2">
@@ -40,17 +41,11 @@ export default function About() {
           <h2 className="font-display text-3xl font-extrabold text-navy-900 dark:text-white sm:text-4xl">
             الفيزياء ليست حفظًا.. هي طريقة تفكير
           </h2>
-          <p className="mt-5 leading-8 text-navy-600 dark:text-navy-300">
-            أنا الأستاذ محمد خليل، مدرس فيزياء ورياضيات أونلاين متخصص في تدريس
-            طلاب الثانوية العامة . أؤمن أن أي طالب
-            يستطيع التفوق في الفيزياء والرياضيات إذا فهم الفكرة قبل الحفظ،
-            لذلك أبني كل درس على أساس منطقي متسلسل يربط القانون بمعناه الفعلي
-            قبل تطبيقه في المسائل.
-          </p>
-          <p className="mt-4 leading-8 text-navy-600 dark:text-navy-300">
-            أسلوبي في التدريس يعتمد على التفاعل المباشر، حل نماذج حقيقية من
-            الاختبارات، ومتابعة دقيقة لتقدم كل طالب حتى يصل لأعلى مستوياته.
-          </p>
+          {country.aboutText.map((paragraph, i) => (
+            <p key={i} className="mt-5 leading-8 text-navy-600 dark:text-navy-300 first:mt-5">
+              {paragraph}
+            </p>
+          ))}
         </motion.div>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">

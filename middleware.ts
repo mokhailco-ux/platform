@@ -30,8 +30,9 @@ export async function middleware(request: NextRequest) {
 
   const isStudentArea = request.nextUrl.pathname.startsWith("/student");
   const isCheckout = request.nextUrl.pathname.startsWith("/checkout");
+  const isAdminArea = request.nextUrl.pathname.startsWith("/admin-panel");
 
-  if ((isStudentArea || isCheckout) && !user) {
+  if ((isStudentArea || isCheckout || isAdminArea) && !user) {
     const loginUrl = new URL("/login", request.url);
     loginUrl.searchParams.set("redirectTo", request.nextUrl.pathname);
     return NextResponse.redirect(loginUrl);
@@ -41,5 +42,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/student/:path*", "/checkout/:path*"],
+  matcher: ["/student/:path*", "/checkout/:path*", "/admin-panel/:path*"],
 };

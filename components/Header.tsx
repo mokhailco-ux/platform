@@ -14,7 +14,7 @@ const links = [
   { href: "#contact", label: "تواصل معي" },
 ];
 
-// قائمة منسدلة لاختيار الدولة - كل دولة رابطها المستقل /sa /jo /om /ae
+// قائمة منسدلة لاختيار الدولة - كل دولة رابطها المستقل /sa /jo /ae
 function CountrySelector({ current }: { current: Country }) {
   const [open, setOpen] = useState(false);
 
@@ -74,7 +74,10 @@ export default function Header({ country }: { country: Country }) {
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8 lg:px-16">
         <a href="#" className="flex items-center gap-2 font-display font-extrabold text-navy-900 dark:text-white">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 text-white shadow-lg shadow-orange-500/30 ring-2 ring-white/20">
+          <span
+            className="flex h-9 w-9 items-center justify-center rounded-full text-white shadow-md shadow-orange-500/30"
+            style={{ background: "linear-gradient(135deg, #ff9a5a, #e8600f)" }}
+          >
             <Atom size={18} />
           </span>
           <span className="text-lg">أ. محمد خليل</span>
@@ -96,7 +99,7 @@ export default function Header({ country }: { country: Country }) {
           <CountrySelector current={country} />
           <ThemeToggle />
           <a href="/student" className="hidden text-sm font-bold text-navy-600 hover:text-orange-500 dark:text-navy-200 sm:inline-block">
-           تسجيل دخول الطلاب 
+            منصة الطلاب
           </a>
           <a href="#courses" className="btn-primary hidden !px-5 !py-2.5 text-sm sm:inline-flex">
             احجز الآن
