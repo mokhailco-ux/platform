@@ -73,7 +73,7 @@ export type Video = {
 export const videos: Video[] = [
   {
     id: "v1",
-    youtubeId: "dQw4w9WgXcQ",
+    youtubeId: "https://youtu.be/oKl5NccwNmQ?si=c2w4g7FhX7QAcy-2",
     title: "مقدمة في قوانين نيوتن للحركة",
     description: "شرح مبسط لقوانين نيوتن الثلاثة مع أمثلة تطبيقية.",
   },
@@ -166,14 +166,14 @@ export const faqs: FaqItem[] = [
 ];
 
 export const stats = {
-  students: 1280,
-  courses: 24,
-  hours: 950,
+  students: 128,
+  courses: 9,
+  hours: 500,
 };
 
 export const social = {
-  whatsapp: "https://wa.me/966500000000",
-  telegram: "https://t.me/mohamedkhalil",
+  whatsapp: "https://wa.me/96795248501",
+  telegram: "https://t.me/mkhalil2723",
   facebook: "https://facebook.com/mohamedkhalil",
   instagram: "https://instagram.com/mohamedkhalil",
 };
