@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { countryList } from "@/lib/countries";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://mohamedkhalil-physics.com";
+  const base = "https://www.phykhalil.shop";
   return [
     {
       url: base,

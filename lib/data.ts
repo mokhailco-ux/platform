@@ -172,8 +172,8 @@ export const stats = {
 };
 
 export const social = {
-  whatsapp: "https://wa.me/96795248501",
+  whatsapp: "https://wa.me/962795248501",
   telegram: "https://t.me/mkhalil2723",
   facebook: "https://facebook.com/mohamedkhalil",
-  instagram: "https://instagram.com/mohamedkhalil",
+  instagram: "https://instagram.com/phy_khalil",
 };
