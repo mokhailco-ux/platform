@@ -1,0 +1,42 @@
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  // لا تعيد التوجيه إذا كان المستخدم داخل دولة محددة
+  if (
+    pathname.startsWith("/jo") ||
+    pathname.startsWith("/sa") ||
+    pathname.startsWith("/ae")
+  ) {
+    return NextResponse.next();
+  }
+
+  // قراءة الدولة من IP بواسطة Vercel
+  const country = request.headers.get("x-vercel-ip-country");
+
+  // 🇯🇴 الأردن
+  if (country === "JO") {
+    return NextResponse.redirect(new URL("/jo", request.url));
+  }
+
+  // 🇸🇦 السعودية
+  if (country === "SA") {
+    return NextResponse.redirect(new URL("/sa", request.url));
+  }
+
+  // 🇦🇪 الإمارات
+  if (country === "AE") {
+    return NextResponse.redirect(new URL("/ae", request.url));
+  }
+
+  // باقي الدول
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
+};

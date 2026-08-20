@@ -55,6 +55,7 @@ export default function Hero({ country }: { country: Country }) {
           className="font-display text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl"
         >
           أتقن الفيزياء مع الأستاذ{" "}
+            <br />
           <span className="text-orange-500">محمد خليل</span>
         </motion.h1>
 
