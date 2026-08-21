@@ -1,10 +1,11 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 
-// عميل Supabase يُستخدم داخل Server Components وRoute Handlers.
-// يقرأ جلسة تسجيل الدخول من الكوكيز حتى نعرف "من هو الطالب" في كل طلب.
-export function createClient() {
-  const cookieStore = cookies();
+// Client للمستخدم الحالي.
+// يُستخدم داخل Server Components وRoute Handlers.
+export async function createClient() {
+  const cookieStore = await cookies();
 
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -18,14 +19,18 @@ export function createClient() {
           try {
             cookieStore.set({ name, value, ...options });
           } catch {
-            // يحدث هذا الخطأ عند الاستدعاء من Server Component وليس Route Handler، ويمكن تجاهله
+            // Server Component: قد لا تكون الكتابة إلى cookies متاحة هنا.
           }
         },
         remove(name: string, options: CookieOptions) {
           try {
-            cookieStore.set({ name, value: "", ...options });
+            cookieStore.set({
+              name,
+              value: "",
+              ...options,
+            });
           } catch {
-            // نفس الملاحظة أعلاه
+            // Server Component: قد لا تكون الكتابة إلى cookies متاحة هنا.
           }
         },
       },
@@ -33,15 +38,17 @@ export function createClient() {
   );
 }
 
-// عميل بصلاحيات كاملة (Service Role) يُستخدم فقط داخل السيرفر لعمليات حساسة
-// مثل جلب روابط الفيديوهات المحمية بعد التحقق من التسجيل، أو تفعيل الاشتراك بعد الدفع.
-// لا تستورد هذا الملف أبدًا داخل مكوّن عميل ("use client").
-import { createClient as createSupabaseClient } from "@supabase/supabase-js";
-
+// Admin Client.
+// SERVER ONLY — ممنوع استيراده في Client Components.
 export function createAdminClient() {
   return createSupabaseClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { persistSession: false } }
+    {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+      },
+    }
   );
 }
