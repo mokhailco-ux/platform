@@ -73,19 +73,19 @@ export type Video = {
 export const videos: Video[] = [
   {
     id: "v1",
-    youtubeId: "https://youtu.be/oKl5NccwNmQ?si=c2w4g7FhX7QAcy-2",
+    youtubeId: ""
     title: "مقدمة في قوانين نيوتن للحركة",
     description: "شرح مبسط لقوانين نيوتن الثلاثة مع أمثلة تطبيقية.",
   },
   {
     id: "v2",
-    youtubeId: "dQw4w9WgXcQ",
+    youtubeId: "dQ",
     title: "كيف تحل مسائل الكهرباء الساكنة؟",
     description: "استراتيجية خطوة بخطوة لحل أصعب مسائل الكهرباء الساكنة.",
   },
   {
     id: "v3",
-    youtubeId: "dQw4w9WgXcQ",
+    youtubeId: "Q",
     title: "المعادلات التفاضلية ببساطة",
     description: "تبسيط فكرة المعادلات وربطها بتطبيقات الفيزياء.",
   },
