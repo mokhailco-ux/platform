@@ -12,7 +12,7 @@ function isAdminEmail(email: string | undefined | null) {
 // يُستخدم داخل صفحات السيرفر (Server Components) بمنطقة الأدمن.
 // يتأكد إن الزائر مسجّل دخول وإن حسابه أدمن، وإلا يرجّعه لمكان مناسب.
 export async function requireAdminPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -34,7 +34,7 @@ export async function requireAdminPage() {
 // نفس الفكرة بس لمسارات الـ API (route handlers) - يرجّع null لو مو أدمن
 // بدل ما يعمل redirect (اللي ما ينفع داخل route handler).
 export async function requireAdminApi() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

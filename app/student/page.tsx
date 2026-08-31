@@ -13,7 +13,7 @@ type EnrollmentRow = {
 };
 
 export default async function StudentDashboard() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

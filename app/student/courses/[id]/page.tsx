@@ -5,8 +5,9 @@ import { Lock, ArrowRight, FileText, Download } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
-export default async function CourseVideosPage({ params }: { params: { id: string } }) {
-  const supabase = createClient();
+export default async function CourseVideosPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -16,7 +17,7 @@ export default async function CourseVideosPage({ params }: { params: { id: strin
   const { data: course } = await supabase
     .from("courses")
     .select("id, title, price")
-    .eq("id", params.id)
+    .eq("id", id)
     .single();
 
   if (!course) notFound();
@@ -25,7 +26,7 @@ export default async function CourseVideosPage({ params }: { params: { id: strin
     .from("enrollments")
     .select("status, trial_ends_at")
     .eq("user_id", user.id)
-    .eq("course_id", params.id)
+    .eq("course_id", id)
     .maybeSingle();
 
   const trialActive =

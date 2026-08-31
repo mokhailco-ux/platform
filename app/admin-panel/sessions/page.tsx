@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 
 export default async function SessionsPage() {
   await requireAdminPage();
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data: courses } = await supabase
     .from("courses")

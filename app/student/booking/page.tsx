@@ -13,7 +13,7 @@ const typeLabel: Record<string, string> = {
 };
 
 export default async function BookingPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

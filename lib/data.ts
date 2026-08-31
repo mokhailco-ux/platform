@@ -73,7 +73,7 @@ export type Video = {
 export const videos: Video[] = [
   {
     id: "v1",
-    youtubeId: ""
+    youtubeId: "",
     title: "مقدمة في قوانين نيوتن للحركة",
     description: "شرح مبسط لقوانين نيوتن الثلاثة مع أمثلة تطبيقية.",
   },

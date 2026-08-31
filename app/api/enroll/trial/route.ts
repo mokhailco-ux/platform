@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 
 // يُستدعى عند ضغط الطالب على "ابدأ الفترة المجانية" في صفحة دورة معيّنة.
 export async function POST(request: Request) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

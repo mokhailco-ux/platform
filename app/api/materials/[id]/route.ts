@@ -3,8 +3,9 @@ import { createClient, createAdminClient } from "@/lib/supabase/server";
 
 // يتحقق أولًا من أن الطالب مسجّل ولديه اشتراك فعّال بالدورة المرتبطة
 // بهذا الملف، قبل ما يولّد رابط تحميل مؤقت (صالح لدقيقة واحدة فقط).
-export async function GET(request: Request, { params }: { params: { id: string } }) {
-  const supabase = createClient();
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -15,7 +16,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
   const { data: material } = await admin
     .from("course_materials")
     .select("id, file_path, course_id")
-    .eq("id", params.id)
+    .eq("id", id)
     .single();
 
   if (!material) return NextResponse.json({ error: "الملف غير موجود" }, { status: 404 });

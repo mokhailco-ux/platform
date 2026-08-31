@@ -4,18 +4,19 @@ import MoyasarCheckout from "@/components/MoyasarCheckout";
 
 export const dynamic = "force-dynamic";
 
-export default async function CheckoutPage({ params }: { params: { courseId: string } }) {
-  const supabase = createClient();
+export default async function CheckoutPage({ params }: { params: Promise<{ courseId: string }> }) {
+  const { courseId } = await params;
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) redirect(`/login?redirectTo=/checkout/${params.courseId}`);
+  if (!user) redirect(`/login?redirectTo=/checkout/${courseId}`);
 
   const { data: course } = await supabase
     .from("courses")
     .select("id, title, price")
-    .eq("id", params.courseId)
+    .eq("id", courseId)
     .single();
 
   if (!course) notFound();

@@ -8,8 +8,9 @@ export function generateStaticParams() {
   return countryList.map((c) => ({ country: c.code }));
 }
 
-export function generateMetadata({ params }: { params: { country: string } }): Metadata {
-  const country = getCountry(params.country);
+export async function generateMetadata({ params }: { params: Promise<{ country: string }> }): Promise<Metadata> {
+  const { country: countryCode } = await params;
+  const country = getCountry(countryCode);
   if (!country) return {};
 
   return {
@@ -22,8 +23,9 @@ export function generateMetadata({ params }: { params: { country: string } }): M
   };
 }
 
-export default function CountryPage({ params }: { params: { country: string } }) {
-  const country = countries[params.country];
+export default async function CountryPage({ params }: { params: Promise<{ country: string }> }) {
+  const { country: countryCode } = await params;
+  const country = countries[countryCode];
   if (!country) notFound();
 
   return <HomePage country={country} />;
