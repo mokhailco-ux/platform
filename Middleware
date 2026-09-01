@@ -7,8 +7,7 @@ export function middleware(request: NextRequest) {
   // لا تعيد التوجيه إذا كان المستخدم داخل دولة محددة
   if (
     pathname.startsWith("/jo") ||
-    pathname.startsWith("/sa") ||
-    pathname.startsWith("/ae")
+    pathname.startsWith("/sa")
   ) {
     return NextResponse.next();
   }
@@ -24,11 +23,6 @@ export function middleware(request: NextRequest) {
   // 🇸🇦 السعودية
   if (country === "SA") {
     return NextResponse.redirect(new URL("/sa", request.url));
-  }
-
-  // 🇦🇪 الإمارات
-  if (country === "AE") {
-    return NextResponse.redirect(new URL("/ae", request.url));
   }
 
   // باقي الدول

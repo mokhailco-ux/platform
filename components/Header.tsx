@@ -14,7 +14,7 @@ const links = [
   { href: "#contact", label: "تواصل معي" },
 ];
 
-// قائمة منسدلة لاختيار الدولة - كل دولة رابطها المستقل /sa /jo /ae
+// قائمة منسدلة لاختيار الدولة - كل دولة رابطها المستقل /sa /jo
 function CountrySelector({ current }: { current: Country }) {
   const [open, setOpen] = useState(false);
 

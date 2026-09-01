@@ -13,7 +13,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import type { Country } from "@/lib/countries";
 
 // القالب المشترك للصفحة الرئيسية - يُستخدم مرة للرابط الافتراضي "/"
-// ومرة أخرى لكل رابط دولة (/sa, /jo, /ae) بنفس المكونات بالضبط
+// ومرة أخرى لكل رابط دولة (/sa, /jo) بنفس المكونات بالضبط
 // لكن ببيانات (أسعار، واتساب، مناهج، أسئلة شائعة) مختلفة حسب الدولة الممرَّرة.
 export default function HomePage({ country }: { country: Country }) {
   return (

@@ -108,7 +108,7 @@ export default function Dashboard() {
 
       <p className="mx-auto max-w-4xl px-5 pt-6 text-xs text-navy-400">
         ⚠️ ملاحظة: هذه اللوحة تعدّل بيانات تجريبية غير مرتبطة بصفحات الدول
-        (/sa، /jo، /ae). لتعديل دورات وأسعار كل دولة فعليًا، عدّل ملف
+        (/sa، /jo). لتعديل دورات وأسعار كل دولة فعليًا، عدّل ملف
         lib/countries.ts مباشرة.
       </p>
 
