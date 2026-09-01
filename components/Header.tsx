@@ -99,7 +99,7 @@ export default function Header({ country }: { country: Country }) {
           <CountrySelector current={country} />
           <ThemeToggle />
           <a href="/student" className="hidden text-sm font-bold text-navy-600 hover:text-orange-500 dark:text-navy-200 sm:inline-block">
-            منصة الطلاب
+           
           </a>
           <a href="#courses" className="btn-primary hidden !px-5 !py-2.5 text-sm sm:inline-flex">
             احجز الآن

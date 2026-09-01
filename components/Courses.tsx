@@ -75,8 +75,9 @@ export default function Courses({ country }: { country: Country }) {
                 href="/signup"
                 className="mt-3 block text-center text-xs font-bold text-navy-400 hover:text-orange-500"
               >
-                أو جرّب مجانًا عبر حسابك
-              </a>
+               
+               
+                              </a>
             </motion.div>
           ))}
         </div>

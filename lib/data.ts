@@ -103,7 +103,7 @@ export type Testimonial = {
 export const testimonials: Testimonial[] = [
   {
     id: "t1",
-    name: "عبدالله الشمري",
+    name: "عبدالله العمري",
     stage: "ثالث ثانوي - مسار علمي",
     rating: 5,
     comment:
@@ -111,7 +111,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     id: "t2",
-    name: "سارة القحطاني",
+    name: "سارة الكندي",
     stage: "ثاني ثانوي",
     rating: 5,
     comment:
@@ -137,7 +137,7 @@ export const faqs: FaqItem[] = [
     id: "f1",
     question: "كيف تتم الدراسة؟ هل هي مباشرة أم مسجلة؟",
     answer:
-      "تجمع الدورات بين حصص مباشرة أسبوعية عبر Zoom وفيديوهات مسجلة يمكن مشاهدتها في أي وقت لمراجعة الدروس.",
+      "تجمع الدورات بين حصص مباشرة أسبوعية عبر Google meet وفيديوهات مسجلة يمكن مشاهدتها في أي وقت لمراجعة الدروس.",
   },
   {
     id: "f2",
@@ -149,7 +149,7 @@ export const faqs: FaqItem[] = [
     id: "f3",
     question: "ما وسائل الدفع المتاحة؟",
     answer:
-      "يمكنك الدفع عبر التحويل البنكي أو Apple Pay أو مدى، وسيتم إرسال تفاصيل الدفع بعد التواصل عبر واتساب.",
+      "يمكنك الدفع عبر التحويل البنكي  أو paypal وسيتم إرسال تفاصيل الدفع بعد التواصل عبر واتساب.",
   },
   {
     id: "f4",
@@ -174,6 +174,6 @@ export const stats = {
 export const social = {
   whatsapp: "https://wa.me/962795248501",
   telegram: "https://t.me/phymkhallil",
-  facebook: "https://facebook.com/mohamedkhalil",
+  facebook: " ",
   instagram: "https://instagram.com/phy_mkhalil",
 };

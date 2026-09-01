@@ -39,7 +39,7 @@ export default function About({ country }: { country: Country }) {
         >
           <span className="eyebrow">نبذة عني</span>
           <h2 className="font-display text-3xl font-extrabold text-navy-900 dark:text-white sm:text-4xl">
-            الفيزياء ليست حفظًا.. هي طريقة تفكير
+            الفيزياء والرياضات ليست حفظًا.. هي طريقة تفكير
           </h2>
           {country.aboutText.map((paragraph, i) => (
             <p key={i} className="mt-5 leading-8 text-navy-600 dark:text-navy-300 first:mt-5">

@@ -90,7 +90,7 @@ export default function Contact({ country }: { country: Country }) {
               type="text"
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
-              placeholder="اسمك الكامل"
+              placeholder="أسمك "
               className="w-full rounded-xl border border-navy-200 bg-white px-4 py-3 text-sm text-navy-900 outline-none transition-colors focus:border-orange-500 dark:border-navy-600 dark:bg-navy-800 dark:text-white"
             />
           </div>
@@ -104,7 +104,7 @@ export default function Contact({ country }: { country: Country }) {
               type="tel"
               value={form.phone}
               onChange={(e) => setForm({ ...form, phone: e.target.value })}
-              placeholder="05xxxxxxxx"
+              placeholder="0xxxxxxxxx"
               className="w-full rounded-xl border border-navy-200 bg-white px-4 py-3 text-sm text-navy-900 outline-none transition-colors focus:border-orange-500 dark:border-navy-600 dark:bg-navy-800 dark:text-white"
             />
           </div>
